@@ -46,5 +46,5 @@ I work on maintaining and extending real-world applications, implementing busine
 <p align="center">
   <img src="./assets/outro.svg" width="100%" alt="Three Clawds: one sleeping, one waving and saying thanks for visiting, one reading" />
   <br/>
-  <sub>Clawd made with <a href="https://github.com/jaameypr/clawd-readme">clawd-readme</a></sub>
+  <sub>Clawd made with <a href="https://github.com/jaameypr/clawd-md">clawd-md</a></sub>
 </p>

@@ -1,12 +1,12 @@
-<h1 align="center">clawd-readme</h1>
+<h1 align="center">clawd-md</h1>
 <p align="center">Cute animated Clawd — the Claude Code mascot — for your GitHub README.<br/>
 Walking, sitting, sleeping, dancing, with hats, laptops, speech bubbles and a Claude-Code-style status line.<br/>
 Pure SVG + CSS. No JavaScript in the output, no GIFs. Light and dark mode built in. Everything configurable.</p>
 
 <p align="center">
-  <a href="https://jaameypr.github.io/clawd-readme/"><b>✻ Open the playground</b></a> ·
-  <a href="#use-a-ready-made-svg">Use a ready-made SVG</a> ·
-  <a href="#make-your-own">Make your own</a> ·
+  <a href="#clawdify-your-readme-with-one-prompt"><b>✻ Clawdify with one prompt</b></a> ·
+  <a href="https://jaameypr.github.io/clawd-md/">Playground</a> ·
+  <a href="#setup">Setup</a> ·
   <a href="#config-reference">Config reference</a>
 </p>
 
@@ -25,34 +25,117 @@ Pure SVG + CSS. No JavaScript in the output, no GIFs. Light and dark mode built 
 | `sleepy` | <img src="./assets/sleepy.svg" width="520" alt="" /> |
 | `banner` — background, clouds, flowers, typed text | <img src="./assets/banner.svg" width="520" alt="" /> |
 
-## Use a ready-made SVG
+See it in the wild: [github.com/jaameypr](https://github.com/jaameypr) ([source](./examples/profile)).
 
-Paste into any Markdown file:
+## Clawdify your README with one prompt
+
+Open [Claude Code](https://claude.com/claude-code) (or any coding agent) in the repo whose README you want to decorate — for a profile README that is the `<username>/<username>` repo — and paste this:
+
+````text
+Clawdify my README.md using https://github.com/jaameypr/clawd-md — animated pixel
+Clawds (the Claude Code mascot) rendered as SVGs from a JSON config.
+
+1. Clone the generator: git clone --depth 1 https://github.com/jaameypr/clawd-md .clawd-md
+   Read .clawd-md/README.md (section "Config reference") and .clawd-md/clawd.config.json
+   (the presets) so you know every option.
+2. Read my README.md and understand who I am and what I work on.
+3. Create clawd.config.json in the repo root with outDir "assets" and 2–3 scenes that
+   fit my content. Less is more — for example:
+   - a header scene with my name as text and a Clawd hopping by,
+   - one status line ("✻ Flibbertigibbeting… (esc to interrupt)") using
+     verbs: ["claude"] or a mix of my own verbs and "claude",
+   - a calm footer with a few sitting / waving / sleeping Clawds.
+   Match accessories and speech bubbles to my stack and hobbies. Keep bubble texts short.
+4. Build: node .clawd-md/scripts/build.js clawd.config.json   (Node 18+, no npm install)
+5. Insert the SVGs into README.md with relative paths, e.g.
+   <p align="center"><img src="./assets/header.svg" width="100%" alt="…" /></p>
+   Keep all my existing text. Give every image a meaningful alt text.
+6. Delete .clawd-md, then show me the diff before committing anything.
+````
+
+Want it to stay editable on GitHub? Also add the workflow from [Keep it in sync](#keep-it-in-sync-with-a-github-action).
+
+## Setup
+
+### Option A — Playground (no install)
+
+Open the [playground](https://jaameypr.github.io/clawd-md/), pick a preset, click around or edit the JSON, then *Download SVG*. Put the file into your repo (e.g. `assets/clawd.svg`) and reference it:
+
+```html
+<p align="center"><img src="./assets/clawd.svg" width="100%" alt="Clawd" /></p>
+```
+
+### Option B — Config in your own repo
+
+1. Add a `clawd.config.json` to your repo (start from [the presets](./clawd.config.json) or [the profile example](./examples/profile/clawd.config.json)).
+2. Build the SVGs — Node 18+, nothing to install:
+
+   ```sh
+   git clone --depth 1 https://github.com/jaameypr/clawd-md .clawd-md
+   node .clawd-md/scripts/build.js clawd.config.json    # writes <outDir>/<scene>.svg
+   ```
+
+3. Reference `./assets/<scene>.svg` in your README and commit.
+
+### Keep it in sync with a GitHub Action
+
+Add `.github/workflows/clawd.yml` to your repo. Every time you edit `clawd.config.json` (even in the GitHub web editor), the SVGs are rebuilt and committed:
+
+```yaml
+name: Clawd
+on:
+  push:
+    paths: ['clawd.config.json']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: jaameypr/clawd-md
+          path: .clawd-md
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node .clawd-md/scripts/build.js clawd.config.json
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets
+          git diff --cached --quiet || (git commit -m "chore: rebuild Clawd SVGs" && git push)
+```
+
+### Option C — Hotlink a ready-made SVG
+
+Quickest, but you can't customize it:
 
 ```html
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jaameypr/clawd-readme/main/assets/walk.svg" width="100%" alt="Clawd hopping by" />
+  <img src="https://raw.githubusercontent.com/jaameypr/clawd-md/main/assets/walk.svg" width="100%" alt="Clawd hopping by" />
 </p>
 ```
 
-Swap `walk.svg` for any scene from the gallery. For dividers between sections use `divider.svg`.
-A complete profile README is in [`examples/profile/README.md`](./examples/profile/README.md).
+Swap `walk.svg` for any scene from the gallery; `divider.svg` works as a replacement for `---`.
 
-## Make your own
+### Option D — Use the renderer as a library
 
-**Option A — Playground (no install).** Open the [playground](https://jaameypr.github.io/clawd-readme/), pick a preset, click around or edit the JSON, hit *Download SVG*, commit the file to your own repo and reference it with `./assets/your-file.svg`.
-
-**Option B — Fork + config.** Fork this repo, edit [`clawd.config.json`](./clawd.config.json) on GitHub, commit. The included GitHub Action renders every scene to `assets/<name>.svg` and commits them. Locally:
-
-```sh
-npm run build            # needs Node 18+, no dependencies
-```
-
-**Option C — Library.** `src/render.js` is a dependency-free ES module:
+`src/render.js` is a dependency-free ES module that runs in Node and in the browser:
 
 ```js
 import { renderScene } from './src/render.js';
 const svg = renderScene({ clawds: [{ pose: 'sit', accessories: ['laptop'], say: ['git push', 'ship it'] }] });
+```
+
+### Working on clawd-md itself
+
+```sh
+git clone https://github.com/jaameypr/clawd-md && cd clawd-md
+npm run build                 # renders clawd.config.json -> assets/*.svg
+python -m http.server 8000    # playground at http://localhost:8000 (ES modules don't load from file://)
 ```
 
 ## Config reference
@@ -133,8 +216,6 @@ The Claude Code spinner: `✻ Flibbertigibbeting… (esc to interrupt)`, typed o
 ## How it works
 
 GitHub strips scripts and styles from Markdown, but an SVG loaded through `<img>` keeps its own internal CSS — including `@keyframes` and `prefers-color-scheme`. Clawd is drawn with `<rect>`s on a pixel grid. Nested groups each carry one animation (walk, trick, hop, squash, legs, blink, look), so they combine without fighting over `transform`. Cycling messages are staggered opacity windows; typing is a `steps()` scale on a clip path.
-
-Previewing locally: the playground loads `src/render.js` as a module, which browsers block on `file://`. Run `python -m http.server` (or `npx serve`) in the repo and open `http://localhost:8000`.
 
 ## Contributing
 

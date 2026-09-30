@@ -1,5 +1,5 @@
 {
-  "name": "clawd-readme",
+  "name": "clawd-md",
   "version": "1.0.0",
   "description": "Cute animated Claude Code mascot (Clawd) for your GitHub README. Configurable SVG generator.",
   "type": "module",

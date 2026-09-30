@@ -16,7 +16,7 @@
         { "text": "Software Developer from Germany", "x": "52%", "y": 116, "size": 16, "weight": 600, "color": "muted" }
       ],
       "clawds": [
-        { "animation": "walk", "size": 7, "say": "hallo!", "walk": { "duration": 18, "stopAt": 0.12, "stopFor": 0.14, "trick": "hop" } }
+        { "animation": "walk", "size": 7, "say": "hi!", "walk": { "duration": 18, "stopAt": 0.12, "stopFor": 0.14, "trick": "hop" } }
       ]
     },
     "thinking": {
@@ -29,7 +29,7 @@
       "height": 130,
       "clawds": [
         { "x": "30%", "pose": "sit", "animation": "sleep", "size": 5 },
-        { "x": "50%", "animation": "wave", "eyes": "happy", "say": ["thanks for visiting!", "bis bald!"], "sayEvery": 3.5 },
+        { "x": "50%", "animation": "wave", "eyes": "happy", "say": ["thanks for visiting!", "see you soon!"], "sayEvery": 3.5 },
         { "x": "70%", "pose": "sit", "accessories": ["glasses", "book"], "size": 5, "delay": 1.2 }
       ]
     }

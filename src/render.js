@@ -1,4 +1,4 @@
-// clawd-readme renderer: scene config -> animated SVG string.
+// clawd-md renderer: scene config -> animated SVG string.
 // Pure ES module, no dependencies. Runs in Node (scripts/build.js) and in the browser (index.html).
 
 export const ORANGE = '#D97757';
