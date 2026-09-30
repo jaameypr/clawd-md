@@ -36,7 +36,7 @@ Paste into any Markdown file:
 ```
 
 Swap `walk.svg` for any scene from the gallery. For dividers between sections use `divider.svg`.
-A complete profile README is in [`examples/profile-README.md`](./examples/profile-README.md).
+A complete profile README is in [`examples/profile/README.md`](./examples/profile/README.md).
 
 ## Make your own
 

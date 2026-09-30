@@ -1,0 +1,62 @@
+{
+  "$comment": "Clawd scenes for github.com/jaameypr/jaameypr. Build: node scripts/build.js examples/profile/clawd.config.json",
+  "outDir": "assets",
+  "scenes": {
+    "hero": {
+      "height": 180,
+      "background": { "light": "#fdf6ec", "dark": "#1a1a17", "radius": 14 },
+      "theme": { "light": { "ground": "#3d3929" }, "dark": { "ground": "#8b949e" } },
+      "decor": [
+        { "type": "cloud", "x": "40%", "y": 20 },
+        { "type": "cloud", "x": "78%", "y": 34, "scale": 0.6, "speed": 0.7 },
+        { "type": "flower", "x": "80%" },
+        { "type": "flower", "x": "90%", "scale": 1.3, "delay": 1 },
+        { "type": "sparkle", "x": "28%", "y": 34, "delay": 0.4 },
+        { "type": "sparkle", "x": "94%", "y": 24, "scale": 0.7, "delay": 1.3 }
+      ],
+      "texts": [
+        { "text": "Hi, I'm Jamey", "x": "55%", "y": 82, "size": 30 },
+        { "text": ["Software Developer from Germany", "C# · Java · TypeScript", "powered by coffee & Claude"], "x": "55%", "y": 116, "size": 17, "weight": 600, "color": "muted", "typing": true, "every": 3.5 }
+      ],
+      "clawds": [
+        { "animation": "walk", "size": 7, "say": "hallo!", "walk": { "duration": 18, "stopAt": 0.12, "stopFor": 0.14, "trick": "hop" } }
+      ]
+    },
+    "divider-work": {
+      "height": 60,
+      "ground": { "style": "solid", "width": 2, "y": 52 },
+      "clawds": [{ "size": 4, "pose": "sit", "accessories": ["laptop"], "animation": "bounce", "shadow": false, "hopHeight": 10 }]
+    },
+    "divider-fun": {
+      "height": 60,
+      "ground": { "style": "solid", "width": 2, "y": 52 },
+      "clawds": [{ "size": 4, "accessories": ["party"], "eyes": "happy", "animation": "dance", "shadow": false }]
+    },
+    "divider-stack": {
+      "height": 60,
+      "ground": { "style": "solid", "width": 2, "y": 52 },
+      "clawds": [{ "size": 4, "pose": "sit", "accessories": ["glasses", "book"], "animation": "idle", "shadow": false }]
+    },
+    "work": {
+      "height": 90,
+      "ground": { "style": "none", "y": 78 },
+      "status": { "x": 110, "y": 52, "verbs": ["Shipping XAF features", "Refactoring legacy C#", "Modeling business logic", "Taming DevExpress grids"], "every": 3 },
+      "clawds": [{ "x": 50, "pose": "sit", "accessories": ["laptop", "coffee"], "shadow": false }]
+    },
+    "enjoy": {
+      "height": 150,
+      "clawds": [
+        { "x": "14%", "pose": "sit", "accessories": ["laptop"], "say": ["Next.js 16", "Tailwind"], "delay": 0 },
+        { "x": "38%", "pose": "sit", "accessories": ["glasses"], "say": ["Spring Boot", "Java"], "delay": 0.7 },
+        { "x": "62%", "pose": "sit", "accessories": ["book"], "eyes": "tall", "say": ["MongoDB", "NoSQL"], "delay": 1.4 },
+        { "x": "86%", "accessories": ["crown"], "eyes": "sparkly", "animation": "hop", "say": ["Minecraft", "Hytale mods"], "bubbleSide": "left", "delay": 2.1 }
+      ]
+    },
+    "outro": {
+      "height": 130,
+      "clawds": [
+        { "animation": "walk", "say": "thanks for visiting!", "walk": { "duration": 16, "stopAt": 0.5, "trick": "flip" } }
+      ]
+    }
+  }
+}
