@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/MongoDB-NoSQL-47A248?style=flat&logo=mongodb&logoColor=white" />
 </p>
 
-<p align="center"><img src="https://raw.githubusercontent.com/jaameypr/clawd-readme/main/assets/clawd-divider.svg" width="100%" alt="" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jaameypr/clawd-readme/main/assets/divider.svg" width="100%" alt="" /></p>
 
 ### 💼 Professional Experience
 In my daily work, I develop **Windows desktop business applications** using  
@@ -15,7 +15,7 @@ In my daily work, I develop **Windows desktop business applications** using
 
 I work on maintaining and extending real-world applications, implementing business logic, working with data models, and improving existing codebases.
 
-<p align="center"><img src="https://raw.githubusercontent.com/jaameypr/clawd-readme/main/assets/clawd-divider.svg" width="100%" alt="" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jaameypr/clawd-readme/main/assets/divider.svg" width="100%" alt="" /></p>
 
 ### 🚀 What I Enjoy Working With
 - **Web Development**: Next.js 16, TypeScript, Tailwind CSS  
@@ -23,7 +23,7 @@ I work on maintaining and extending real-world applications, implementing busine
 - **Databases**: MongoDB  
 - **Game Development**: Minecraft & Hytale plugin / mod development  
 
-<p align="center"><img src="https://raw.githubusercontent.com/jaameypr/clawd-readme/main/assets/clawd-divider.svg" width="100%" alt="" /></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jaameypr/clawd-readme/main/assets/divider.svg" width="100%" alt="" /></p>
 
 ### 🛠 Tech Stack
 **Professional**
@@ -41,5 +41,5 @@ I work on maintaining and extending real-world applications, implementing busine
 <br/>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jaameypr/clawd-readme/main/assets/clawd-walk.svg" width="100%" alt="Clawd, the Claude Code mascot, hopping by" />
+  <img src="https://raw.githubusercontent.com/jaameypr/clawd-readme/main/assets/walk.svg" width="100%" alt="Clawd, the Claude Code mascot, hopping by" />
 </p>

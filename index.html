@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clawd Playground</title>
+<meta name="description" content="Build your own animated Clawd SVG for your GitHub README.">
+<style>
+  :root {
+    --bg: #fdf6ec; --panel: #ffffff; --line: #e7dccb; --text: #2b2320; --muted: #6f6258;
+    --accent: #D97757; --accent-ink: #ffffff; --code: #f6efe3; --err: #b3261e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1a1a17; --panel: #232320; --line: #3a3833; --text: #ece6dc; --muted: #a39a8e;
+      --accent: #D97757; --accent-ink: #1a1a17; --code: #1d1d1a; --err: #ff8a80;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1a1a17; --panel: #232320; --line: #3a3833; --text: #ece6dc; --muted: #a39a8e;
+    --accent: #D97757; --accent-ink: #1a1a17; --code: #1d1d1a; --err: #ff8a80;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header, main { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+  header { padding-top: 28px; padding-bottom: 8px; }
+  h1 { font: 700 26px/1.2 ui-monospace, Menlo, Consolas, monospace; margin: 0 0 4px; }
+  h1 span { color: var(--accent); }
+  header p { margin: 0; color: var(--muted); }
+  header a { color: var(--accent); }
+  main { display: grid; grid-template-columns: 340px 1fr; gap: 20px; padding-bottom: 40px; }
+  @media (max-width: 860px) { main { grid-template-columns: 1fr; } }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; min-width: 0; }
+  .panel h2 { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .panel + .panel { margin-top: 16px; }
+  label { display: block; font-size: 13px; color: var(--muted); margin: 10px 0 4px; }
+  select, input[type=text], input[type=number], textarea {
+    width: 100%; font: inherit; color: var(--text); background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px;
+  }
+  input[type=color] { width: 44px; height: 34px; border: 1px solid var(--line); border-radius: 8px; background: var(--code); padding: 2px; }
+  input[type=range] { width: 100%; accent-color: var(--accent); }
+  .row { display: flex; gap: 10px; align-items: end; }
+  .row > * { flex: 1; min-width: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips label { margin: 0; display: inline-flex; gap: 5px; align-items: center; padding: 4px 9px; border: 1px solid var(--line); border-radius: 999px; background: var(--code); color: var(--text); cursor: pointer; }
+  .chips input { accent-color: var(--accent); margin: 0; }
+  textarea { font: 12.5px/1.45 ui-monospace, Menlo, Consolas, monospace; min-height: 340px; resize: vertical; tab-size: 2; }
+  .err { color: var(--err); font-size: 13px; min-height: 1.4em; margin-top: 6px; }
+  .preview { border-radius: 10px; border: 1px solid var(--line); padding: 14px; overflow: hidden; }
+  .preview img { display: block; width: 100%; height: auto; }
+  .preview.light { background: #ffffff; }
+  .preview.dark { background: #0d1117; margin-top: 10px; }
+  .tag { font-size: 12px; color: var(--muted); margin: 0 0 6px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  button { font: inherit; border-radius: 8px; padding: 8px 14px; border: 1px solid var(--line); background: var(--code); color: var(--text); cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  button:hover { filter: brightness(1.05); }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: 10px; overflow-x: auto; font-size: 12.5px; margin: 8px 0 0; }
+  .hint { font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1><span>✻</span> clawd playground</h1>
+  <p>Pick a preset, tweak it, download the SVG and drop it into your README. <a href="https://github.com/jaameypr/clawd-readme">Source &amp; docs</a></p>
+</header>
+
+<main>
+  <div>
+    <section class="panel">
+      <h2>Scene</h2>
+      <label for="preset">Preset</label>
+      <select id="preset"></select>
+      <div class="row">
+        <div><label for="width">Width</label><input id="width" type="number" min="200" max="2000" step="10"></div>
+        <div><label for="height">Height</label><input id="height" type="number" min="40" max="600" step="5"></div>
+      </div>
+      <label for="ground">Ground</label>
+      <select id="ground"><option>dotted</option><option>dashed</option><option>solid</option><option>none</option></select>
+      <div class="chips" style="margin-top:10px"><label><input type="checkbox" id="bg"> cozy background</label></div>
+    </section>
+
+    <section class="panel">
+      <h2>Clawd <select id="which" style="width:auto;display:inline-block;padding:2px 6px;margin-left:6px"></select></h2>
+      <div class="row">
+        <div><label for="animation">Animation</label>
+          <select id="animation"><option>idle</option><option>hop</option><option>bounce</option><option>walk</option><option>dance</option><option>wave</option><option>sleep</option><option>none</option></select></div>
+        <div><label for="pose">Pose</label><select id="pose"><option>stand</option><option>sit</option></select></div>
+      </div>
+      <div class="row">
+        <div><label for="eyes">Eyes</label>
+          <select id="eyes"><option>dots</option><option>tall</option><option>wide</option><option>happy</option><option>sparkly</option><option>closed</option></select></div>
+        <div style="flex:0 0 auto"><label for="color">Color</label><input id="color" type="color"></div>
+      </div>
+      <label>Accessories</label>
+      <div class="chips" id="acc"></div>
+      <label for="say">Speech bubble <span class="hint">— separate messages with |</span></label>
+      <input id="say" type="text" placeholder="hi! | welcome">
+      <label for="size">Size <span id="sizeOut" class="hint"></span></label>
+      <input id="size" type="range" min="2" max="14" step="1">
+      <label for="speed">Speed <span id="speedOut" class="hint"></span></label>
+      <input id="speed" type="range" min="0.25" max="3" step="0.25">
+      <div class="actions"><button id="add">+ add clawd</button><button id="remove">remove this one</button></div>
+    </section>
+  </div>
+
+  <div style="min-width:0">
+    <section class="panel">
+      <h2>Preview</h2>
+      <p class="tag">GitHub light</p>
+      <div class="preview light"><img id="imgLight" alt="preview light"></div>
+      <p class="tag" style="margin-top:10px">GitHub dark</p>
+      <div class="preview dark"><img id="imgDark" alt="preview dark"></div>
+      <div class="actions">
+        <button class="primary" id="download">Download SVG</button>
+        <button id="copyMd">Copy Markdown</button>
+        <button id="copyCfg">Copy config</button>
+      </div>
+      <pre id="md"></pre>
+    </section>
+
+    <section class="panel">
+      <h2>Config (JSON) — everything is editable here</h2>
+      <textarea id="json" spellcheck="false"></textarea>
+      <div class="err" id="err"></div>
+    </section>
+  </div>
+</main>
+
+<script type="module">
+import { renderScene, CLAWD_DEFAULTS, ORANGE } from './src/render.js';
+
+const $ = (id) => document.getElementById(id);
+const ACCESSORIES = ['glasses', 'book', 'laptop', 'coffee', 'party', 'crown', 'tophat'];
+let presets = {};
+let scene = {};
+let current = 0;
+let urls = [];
+
+$('acc').innerHTML = ACCESSORIES.map((a) => `<label><input type="checkbox" value="${a}"> ${a}</label>`).join('');
+
+try {
+  presets = (await (await fetch('./clawd.config.json')).json()).scenes;
+} catch {
+  presets = { walk: { clawds: [{ animation: 'walk', say: 'hi!' }] } };
+}
+$('preset').innerHTML = Object.keys(presets).map((n) => `<option>${n}</option>`).join('');
+
+function load(name) {
+  scene = structuredClone(presets[name]);
+  scene.clawds ??= [];
+  current = 0;
+  syncControls();
+  render();
+}
+
+const clawd = () => scene.clawds[current];
+
+function syncControls() {
+  $('width').value = scene.width ?? 900;
+  $('height').value = scene.height ?? 130;
+  $('ground').value = scene.ground?.style ?? 'dotted';
+  $('bg').checked = !!scene.background;
+  $('which').innerHTML = scene.clawds.map((_, i) => `<option value="${i}">#${i + 1}</option>`).join('') || '<option>—</option>';
+  $('which').value = current;
+  const c = { ...CLAWD_DEFAULTS, ...(clawd() || {}) };
+  $('animation').value = c.animation;
+  $('pose').value = c.pose;
+  $('eyes').value = c.eyes;
+  $('color').value = c.color;
+  $('size').value = c.size;
+  $('speed').value = c.speed;
+  $('sizeOut').textContent = `${c.size}px per pixel`;
+  $('speedOut').textContent = `${c.speed}×`;
+  $('say').value = Array.isArray(c.say) ? c.say.join(' | ') : c.say ?? '';
+  for (const box of $('acc').querySelectorAll('input')) box.checked = (c.accessories || []).includes(box.value);
+  $('json').value = JSON.stringify(scene, null, 2);
+}
+
+function render() {
+  for (const u of urls) URL.revokeObjectURL(u);
+  const blob = (svg) => URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+  urls = [blob(renderScene(scene, { theme: 'light' })), blob(renderScene(scene, { theme: 'dark' }))];
+  $('imgLight').src = urls[0];
+  $('imgDark').src = urls[1];
+  $('md').textContent = mdSnippet();
+}
+
+const fileName = () => `${$('preset').value || 'clawd'}.svg`;
+const mdSnippet = () => `<p align="center">\n  <img src="./assets/${fileName()}" width="100%" alt="Clawd" />\n</p>`;
+
+// Controls patch the JSON; the JSON is the source of truth.
+function patchScene(fn) { fn(scene); $('json').value = JSON.stringify(scene, null, 2); render(); }
+function patchClawd(fn) {
+  if (!clawd()) scene.clawds.push({});
+  patchScene(() => fn(clawd()));
+}
+
+$('preset').onchange = (e) => load(e.target.value);
+$('width').oninput = (e) => patchScene((s) => (s.width = Number(e.target.value)));
+$('height').oninput = (e) => patchScene((s) => (s.height = Number(e.target.value)));
+$('ground').onchange = (e) => patchScene((s) => (s.ground = { ...(s.ground || {}), style: e.target.value }));
+$('bg').onchange = (e) => patchScene((s) => (e.target.checked ? (s.background = { light: '#fdf6ec', dark: '#1a1a17', radius: 14 }) : delete s.background));
+$('which').onchange = (e) => { current = Number(e.target.value) || 0; syncControls(); };
+for (const key of ['animation', 'pose', 'eyes']) $(key).onchange = (e) => patchClawd((c) => (c[key] = e.target.value));
+$('color').oninput = (e) => patchClawd((c) => (c.color = e.target.value));
+$('size').oninput = (e) => { $('sizeOut').textContent = `${e.target.value}px per pixel`; patchClawd((c) => (c.size = Number(e.target.value))); };
+$('speed').oninput = (e) => { $('speedOut').textContent = `${e.target.value}×`; patchClawd((c) => (c.speed = Number(e.target.value))); };
+$('say').oninput = (e) => patchClawd((c) => {
+  const msgs = e.target.value.split('|').map((m) => m.trim()).filter(Boolean);
+  if (msgs.length === 0) delete c.say; else c.say = msgs.length === 1 ? msgs[0] : msgs;
+});
+$('acc').onchange = () => patchClawd((c) => (c.accessories = [...$('acc').querySelectorAll('input:checked')].map((b) => b.value)));
+$('add').onclick = () => {
+  const n = scene.clawds.length;
+  scene.clawds.push({ x: `${Math.round(((n + 1) / (n + 2)) * 100)}%`, pose: 'sit', color: ORANGE, delay: n * 0.7 });
+  current = n; syncControls(); render();
+};
+$('remove').onclick = () => { scene.clawds.splice(current, 1); current = 0; syncControls(); render(); };
+
+$('json').oninput = (e) => {
+  try { scene = JSON.parse(e.target.value); scene.clawds ??= []; $('err').textContent = ''; render(); }
+  catch (err) { $('err').textContent = err.message; }
+};
+
+$('download').onclick = () => {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([renderScene(scene)], { type: 'image/svg+xml' }));
+  a.download = fileName();
+  a.click();
+};
+const copy = (text, btn) => navigator.clipboard.writeText(text).then(() => { const t = btn.textContent; btn.textContent = 'Copied ✓'; setTimeout(() => (btn.textContent = t), 1200); });
+$('copyMd').onclick = (e) => copy(mdSnippet(), e.target);
+$('copyCfg').onclick = (e) => copy(`"${$('preset').value}": ${JSON.stringify(scene, null, 2)}`, e.target);
+
+load(Object.keys(presets)[0]);
+</script>
+</body>
+</html>
