@@ -18,8 +18,8 @@ Pure SVG + CSS. No JavaScript in the output, no GIFs. Light and dark mode built 
 | --- | --- |
 | `walk` — hops through, stops, says hi, does a flip | <img src="./assets/walk.svg" width="520" alt="" /> |
 | `divider` — a cute replacement for `---` | <img src="./assets/divider.svg" width="520" alt="" /> |
-| `sitting` — sitting Clawds with glasses, laptop, coffee and cycling messages | <img src="./assets/sitting.svg" width="520" alt="" /> |
-| `status` — Claude Code spinner with rotating verbs | <img src="./assets/status.svg" width="520" alt="" /> |
+| `sitting` — sitting Clawds with glasses, laptop, party hat and cycling messages | <img src="./assets/sitting.svg" width="520" alt="" /> |
+| `status` — Claude Code spinner with the whimsical thinking verbs (Flibbertigibbeting…) | <img src="./assets/status.svg" width="520" alt="" /> |
 | `party` — hats, dancing, sparkly eyes | <img src="./assets/party.svg" width="520" alt="" /> |
 | `wave` | <img src="./assets/wave.svg" width="520" alt="" /> |
 | `sleepy` | <img src="./assets/sleepy.svg" width="520" alt="" /> |
@@ -118,13 +118,17 @@ A config holds named scenes. Each scene becomes one SVG.
 
 ### Status line
 
-| Key | Default |
-| --- | --- |
-| `verbs` | `["Clauding", "Manifesting", "Pondering", "Brewing", "Noodling"]` |
-| `x`, `y`, `size` | `24`, `30`, `15` |
-| `every` | `2.5` |
-| `hint` | `"esc to interrupt"` (`""` hides it) |
-| `color` | `#D97757` |
+The Claude Code spinner: `✻ Flibbertigibbeting… (esc to interrupt)`, typed out verb by verb.
+
+| Key | Default | Description |
+| --- | --- | --- |
+| `verbs` | `"claude"` | `"claude"` picks from the ~70 real Claude Code thinking verbs (Combobulating, Transmogrifying, Reticulating, …). Or your own list, which may contain `"claude"` as an entry: `["Flibbertigibbeting", "Shipping", "claude"]`. |
+| `count` | `12` | How many verbs `"claude"` expands to. |
+| `seed` | `1` | Change it for a different random pick. The same seed always gives the same SVG. |
+| `x`, `y`, `size` | `24`, `30`, `15` | |
+| `every` | `2.5` | Seconds per verb. |
+| `hint` | `"esc to interrupt"` | `""` hides it. |
+| `color` | `#D97757` | |
 
 ## How it works
 

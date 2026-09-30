@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/MongoDB-NoSQL-47A248?style=flat&logo=mongodb&logoColor=white" />
 </p>
 
-<p align="center"><img src="./assets/divider-work.svg" width="100%" alt="" /></p>
+---
 
 ### 💼 Professional Experience
 In my daily work, I develop **Windows desktop business applications** using  
@@ -16,9 +16,9 @@ In my daily work, I develop **Windows desktop business applications** using
 
 I work on maintaining and extending real-world applications, implementing business logic, working with data models, and improving existing codebases.
 
-<img src="./assets/work.svg" width="100%" alt="Currently: shipping XAF features, refactoring legacy C#, modeling business logic" />
+<img src="./assets/thinking.svg" width="100%" alt="Clawd at a laptop, Claude Code style: Flibbertigibbeting…" />
 
-<p align="center"><img src="./assets/divider-fun.svg" width="100%" alt="" /></p>
+---
 
 ### 🚀 What I Enjoy Working With
 - **Web Development**: Next.js 16, TypeScript, Tailwind CSS  
@@ -26,9 +26,7 @@ I work on maintaining and extending real-world applications, implementing busine
 - **Databases**: MongoDB  
 - **Game Development**: Minecraft & Hytale plugin / mod development  
 
-<img src="./assets/enjoy.svg" width="100%" alt="Four Clawds: Next.js, Spring Boot, MongoDB, Minecraft and Hytale" />
-
-<p align="center"><img src="./assets/divider-stack.svg" width="100%" alt="" /></p>
+---
 
 ### 🛠 Tech Stack
 **Professional**

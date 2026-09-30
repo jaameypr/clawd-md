@@ -56,8 +56,23 @@ export const TEXT_DEFAULTS = {
   typing: false,
 };
 
+// The whimsical "thinking" verbs of the Claude Code spinner. Use verbs: "claude" to pick from them.
+export const CLAUDE_VERBS = [
+  'Accomplishing', 'Actualizing', 'Baking', 'Booping', 'Brewing', 'Cerebrating', 'Channelling', 'Churning', 'Clauding',
+  'Coalescing', 'Cogitating', 'Combobulating', 'Concocting', 'Conjuring', 'Contemplating', 'Crunching', 'Deciphering',
+  'Deliberating', 'Discombobulating', 'Divining', 'Elucidating', 'Enchanting', 'Envisioning', 'Finagling',
+  'Flibbertigibbeting', 'Forging', 'Frolicking', 'Germinating', 'Hatching', 'Herding', 'Honking', 'Hustling', 'Ideating',
+  'Incubating', 'Jiving', 'Manifesting', 'Marinating', 'Meandering', 'Moseying', 'Mulling', 'Mustering', 'Musing',
+  'Noodling', 'Percolating', 'Perusing', 'Philosophising', 'Pondering', 'Pontificating', 'Puttering', 'Puzzling',
+  'Reticulating', 'Ruminating', 'Scheming', 'Schlepping', 'Shimmying', 'Shucking', 'Simmering', 'Smooshing',
+  'Spelunking', 'Stewing', 'Sussing', 'Synthesizing', 'Tinkering', 'Transmogrifying', 'Unfurling', 'Unravelling',
+  'Vibing', 'Wandering', 'Whirring', 'Wibbling', 'Wizarding', 'Wrangling',
+];
+
 export const STATUS_DEFAULTS = {
-  verbs: ['Clauding', 'Manifesting', 'Pondering', 'Brewing', 'Noodling'],
+  verbs: 'claude', // "claude" = random pick from CLAUDE_VERBS; or your own list, which may contain "claude" too
+  count: 12, // how many verbs "claude" expands to
+  seed: 1, // change for a different pick/order; builds stay reproducible
   x: 24,
   y: 30,
   size: 15,
@@ -82,6 +97,23 @@ const r = (n) => Math.round(n * 100) / 100;
 const list = (v) => (v == null || v === '' ? [] : Array.isArray(v) ? v.filter((s) => s !== '') : [v]);
 const px = (v, total) => (typeof v === 'string' && v.trim().endsWith('%') ? (parseFloat(v) / 100) * total : Number(v) || 0);
 const colorOf = (c) => (c === 'text' || c === 'muted' ? `var(--${c})` : c === 'accent' ? ORANGE : c);
+
+// Deterministic shuffle (mulberry32), so the same seed always renders the same SVG.
+function seededShuffle(items, seed) {
+  let a = seed >>> 0 || 1;
+  const rand = () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
 
 function shade(hex, amount) {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex);
@@ -353,7 +385,12 @@ function renderText(ctx, raw) {
 function renderStatus(ctx, raw) {
   const s = deepMerge(STATUS_DEFAULTS, raw);
   const x = px(s.x, ctx.width), y = px(s.y, ctx.height);
-  const verbs = list(s.verbs);
+  // "claude" (alone or as a list entry) expands to a seeded random pick from CLAUDE_VERBS
+  const own = list(s.verbs).filter((v) => v !== 'claude');
+  const pick = list(s.verbs).includes('claude')
+    ? seededShuffle(CLAUDE_VERBS.filter((v) => !own.includes(v)), Number(s.seed) || 1).slice(0, Math.max(1, Number(s.count) || 12))
+    : [];
+  const verbs = list(s.verbs).flatMap((v) => (v === 'claude' ? pick : [v]));
   const star = `<g transform="translate(${r(x + s.size * 0.45)} ${r(y - s.size * 0.33)})"><g style="animation:cl-spin 2.4s linear infinite,cl-pulse 1.2s ease-in-out infinite" stroke="${esc(s.color)}" stroke-width="${r(s.size / 7)}" stroke-linecap="round">${sparkleLines(s.size * 0.42)}</g></g>`;
   const tx = x + s.size * 1.4;
   const lines = cycle(ctx, verbs, s.every, 0, (verb, i, n) => {
