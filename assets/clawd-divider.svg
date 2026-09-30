@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 56" width="900" height="56" role="img" aria-label="Divider with Clawd sitting on it">
+  <style>
+    :root { --line: #d0d7de; }
+    @media (prefers-color-scheme: dark) { :root { --line: #30363d; } }
+    .line { stroke: var(--line); }
+
+    /* idles, looks around, does a double hop */
+    .hop    { animation: hop 4s ease-in-out infinite; }
+    .squash { animation: squash 4s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+    .look   { animation: look 7s steps(1) infinite; }
+    .eyes   { animation: blink 3s infinite; transform-box: fill-box; transform-origin: 50% 50%; }
+
+    @keyframes hop {
+      0%, 66%, 76%, 86%, 100% { transform: translateY(0); }
+      71%, 81%                { transform: translateY(-12px); }
+    }
+    @keyframes squash {
+      0%, 64%, 100% { transform: scale(1, 1); }
+      66%, 76%, 86% { transform: scale(1.12, .86); }
+      71%, 81%      { transform: scale(.94, 1.06); }
+      90%           { transform: scale(1, 1); }
+    }
+    @keyframes look {
+      0%   { transform: translateX(0); }
+      20%  { transform: translateX(-6px); }
+      40%  { transform: translateX(0); }
+      55%  { transform: translateX(6px); }
+      75%  { transform: translateX(0); }
+    }
+    @keyframes blink {
+      0%, 88%, 100% { transform: scaleY(1); }
+      92%           { transform: scaleY(.1); }
+    }
+  </style>
+
+  <line class="line" x1="0" y1="48" x2="900" y2="48" stroke-width="2" stroke-linecap="round"/>
+
+  <g class="hop">
+    <g class="squash">
+      <!-- Clawd at half scale, standing on the line -->
+      <g transform="translate(432 26) scale(.5)" fill="#D97757" shape-rendering="crispEdges">
+        <rect x="12" y="30" width="6" height="12"/>
+        <rect x="24" y="30" width="6" height="12"/>
+        <rect x="42" y="30" width="6" height="12"/>
+        <rect x="54" y="30" width="6" height="12"/>
+        <rect x="6" y="0" width="60" height="30"/>
+        <rect x="0" y="12" width="6" height="12"/>
+        <rect x="66" y="12" width="6" height="12"/>
+        <g class="look">
+          <g class="eyes" fill="#141413">
+            <rect x="18" y="6" width="6" height="12"/>
+            <rect x="48" y="6" width="6" height="12"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
