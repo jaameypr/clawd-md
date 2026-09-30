@@ -7,7 +7,8 @@ Pure SVG + CSS. No JavaScript in the output, no GIFs. Light and dark mode built 
   <a href="#clawdify-your-readme-with-one-prompt"><b>✻ Clawdify with one prompt</b></a> ·
   <a href="https://jaameypr.github.io/clawd-md/">Playground</a> ·
   <a href="#setup">Setup</a> ·
-  <a href="#config-reference">Config reference</a>
+  <a href="#config-reference">Config reference</a> ·
+  <a href="#contributing">Contribute</a>
 </p>
 
 <img src="./assets/banner.svg" width="100%" alt="Clawd walking through a pixel landscape" />
@@ -219,7 +220,16 @@ GitHub strips scripts and styles from Markdown, but an SVG loaded through `<img>
 
 ## Contributing
 
-New accessories, eyes, poses, decor or scenes are welcome. Add them to `src/render.js`, add a scene to `clawd.config.json`, run `npm run build` and open a PR.
+**Clawd wants friends — come build with us!** This is a small, fun codebase (one renderer file, no dependencies), so it's a great place for a first open-source contribution.
+
+- 🎨 Draw a new accessory, pose, eye style or decor piece
+- ✨ Add an animation or a preset scene
+- 🛠 Improve the playground or the docs
+- 🐛 Report something that looks off
+
+Check the [idea list and PR checklist in CONTRIBUTING.md](./CONTRIBUTING.md), grab an [open issue](https://github.com/jaameypr/clawd-md/issues) or [suggest an idea](https://github.com/jaameypr/clawd-md/issues/new?template=idea.md). Using clawd-md in your README? Open an issue with a link — we'd love to feature it.
+
+If Clawd made your README smile, a ⭐ helps others find it.
 
 ## License
 
