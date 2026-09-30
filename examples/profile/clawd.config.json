@@ -28,7 +28,9 @@
     "outro": {
       "height": 130,
       "clawds": [
-        { "animation": "walk", "say": "thanks for visiting!", "walk": { "duration": 16, "stopAt": 0.5, "trick": "flip" } }
+        { "x": "30%", "pose": "sit", "animation": "sleep", "size": 5 },
+        { "x": "50%", "animation": "wave", "eyes": "happy", "say": ["thanks for visiting!", "bis bald!"], "sayEvery": 3.5 },
+        { "x": "70%", "pose": "sit", "accessories": ["glasses", "book"], "size": 5, "delay": 1.2 }
       ]
     }
   }
